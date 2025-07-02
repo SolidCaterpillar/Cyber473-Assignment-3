@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logs for {{ client_id }}</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        h1 {
+            margin: 0;
+            color: #2c3e50;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .back-link:hover {
+            background-color: #2980b9;
+        }
+        .log-count {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: #7f8c8d;
+        }
+        .log-entry { 
+            margin-bottom: 30px; 
+            border: 1px solid #e0e0e0; 
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        .log-filename {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .log-timestamp { 
+            font-size: 0.9em; 
+            color: #7f8c8d;
+        }
+        .log-content {
+            white-space: pre-wrap; 
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 6px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            line-height: 1.5;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .no-logs {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Key Logs for {{ client_id }}</h1>
+            <a href="/" class="back-link">← Back to Dashboard</a>
+        </header>
+        
+        {% if entries %}
+            <div class="log-count">{{ entries|length }} log file(s) found</div>
+            
+            {% for entry in entries %}
+            <div class="log-entry">
+                <div class="log-header">
+                    <div class="log-filename">{{ entry.filename }}</div>
+                    <div class="log-timestamp">
+                        {{ entry.timestamp }}
+                    </div>
+                </div>
+                <div class="log-content">{{ entry.content }}</div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-logs">
+                <p>No logs available for this client</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

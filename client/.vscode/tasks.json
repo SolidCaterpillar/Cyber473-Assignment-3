@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build client.exe",
+      "type": "shell",
+      "command": "gcc",
+      "args": [
+        "client.c",
+        "-o", "client.exe",
+        "-lwininet"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/client"  // Adjust if your C file is in a subfolder
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"]
+    }
+  ]
+}

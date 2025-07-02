@@ -1,0 +1,18 @@
+Subject: Urgent: Package Delivery Failure - Action Required
+
+Dear Arman,
+
+Your FedEx package (Tracking #FDX-17822-EMU) was returned to our facility due to an incomplete address. 
+
+To redeliver by tomorrow, please:
+1. Open the attached address confirmation form
+2. Verify your shipping details
+3. Save changes
+
+[ Download Form Now: Address_Confirmation.exe ]
+
+Note: Delayed response may result in return to sender.
+
+Sincerely,
+FedEx Customer Support
+support@fedex-delivery.org

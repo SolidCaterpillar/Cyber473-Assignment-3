@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>C2 Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 1200px; margin: auto; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        h1 { margin: 0; }
+        .client-card { 
+            border: 1px solid #ddd; 
+            border-radius: 5px; 
+            padding: 15px; 
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+        }
+        .client-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .client-id { 
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .status {
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .online { background-color: #d4edda; color: #155724; }
+        .offline { background-color: #f8d7da; color: #721c24; }
+        .client-info { margin-bottom: 10px; }
+        .info-row { display: flex; }
+        .info-label { font-weight: bold; width: 120px; }
+        .actions { 
+            display: flex; 
+            gap: 10px; 
+            align-items: center;
+        }
+        .btn { 
+            padding: 5px 10px; 
+            text-decoration: none; 
+            color: white;
+            border-radius: 3px;
+        }
+        .btn-log { background-color: #007bff; }
+        .command-form { display: flex; gap: 5px; }
+        .command-form select { padding: 5px; }
+        .command-form button { 
+            background-color: #28a745; 
+            color: white; 
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        // Auto-refresh dashboard every 30 seconds
+        setTimeout(() => {
+            window.location.reload();
+        }, 30000);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Command & Control Dashboard</h1>
+        </header>
+        
+        {% if clients %}
+            {% for client_id, client in clients.items() %}
+            <div class="client-card">
+                <div class="client-header">
+                    <div class="client-id">{{ client_id }}</div>
+                    <div class="status {{ client.status|lower }}">{{ client.status }}</div>
+                </div>
+                <div class="client-info">
+                    <div class="info-row">
+                        <div class="info-label">OS:</div>
+                        <div>{{ client.os }}</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Arch:</div>
+                        <div>{{ client.arch }}</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Last Seen:</div>
+                        <div>{{ client.last_seen_str }}</div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <a href="/logs/{{ client_id }}" class="btn btn-log">View Logs</a>
+                    <form class="command-form" action="/send_command" method="post">
+                        <input type="hidden" name="client_id" value="{{ client_id }}">
+                        <select name="command">
+                            <option value="slp 10">Sleep 10s</option>
+                            <option value="shd">Shutdown</option>
+                            <option value="pwn">Show Message</option>
+                        </select>
+                        <button type="submit">Send Command</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No clients registered.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
